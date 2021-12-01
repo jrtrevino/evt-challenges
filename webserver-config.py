@@ -19,10 +19,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def serve(host, port):
     server_address = (host, port)
     httpd = http.server.HTTPServer(server_address, Handler)
-    httpd.socket = ssl.wrap_socket(httpd.socket,
-                                   server_side=True,
-                                   certfile='./server/localhost.pem',
-                                   ssl_version=ssl.PROTOCOL_TLS)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain('./server/localhost.pem')
+
+    httpd.socket = context.wrap_socket(httpd.socket,
+                                   server_side=True,)
     print(f"Server {host} running on port: {port}")
     httpd.serve_forever()
 
