@@ -18,13 +18,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 # Uses http server to serve the index.html file on host:port.
 def serve(host, port):
     server_address = (host, port)
+    # creates our HTTP server
     httpd = http.server.HTTPServer(server_address, Handler)
+    # creates an SSL socketcontext with TLS protocol
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain('./server/localhost.pem')
-
+    # provide ssl socket to web server
     httpd.socket = context.wrap_socket(httpd.socket,
                                    server_side=True,)
     print(f"Server {host} running on port: {port}")
+    # run our server!
     httpd.serve_forever()
 
 
