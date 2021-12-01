@@ -27,11 +27,15 @@ The program automatically detects the newly-assigned port.
 ## Running
 
 This repository contains a dockerfile to easily build and run this application.
-To run the program, type:
+For added convenience, a shell script is provided to run the docker commands.
+To run the shell script, type:
 
 ```
-$ docker build -t my-web-server-image .
+$ chmod 777 run.sh
+./run.sh
 ```
 
-This will start the webserver which will listen on the provided port.
-You can visit `https://localhost:{PORT}` to view the webpage.
+This will start the webserver which will listen on port 4443.
+You can visit `https://localhost:4443` to view the webpage.
+
+Because the certificate is self-signed, you will get a warning!
